@@ -78,3 +78,11 @@ li button {
   font-size: 0.75em;
   padding: 0.5em 0.65em;
 }
+
+.disabled {
+  background: darkgray !important;
+}
+
+.disabled:hover {
+  cursor: not-allowed;
+}

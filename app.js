@@ -3,18 +3,77 @@ const listDiv = document.querySelector(".list");
 const descriptionInput = document.querySelector("input.description");
 const descriptionP = document.querySelector("p.description");
 const descriptionButton = document.querySelector("button.description");
+const listUl = document.querySelector(".list ul");
 const addItemInput = document.querySelector("input.addItemInput");
 const addItemButton = document.querySelector("button.addItemButton");
-const removeItemButton = document.querySelector("button.removeItemButton");
+const lis = listUl.children;
+const firstListItem = listUl.firstElementChild;
+const lastListItem = listUl.lastElementChild;
 
-listDiv.addEventListener("mouseover", (event) => {
-  if (event.target.tagName == "LI") {
-    event.target.textContent = event.target.textContent.toUpperCase();
+function updateButtons() {
+  let buttons = document.querySelectorAll(".list li button");
+
+  for (let i = 0; i < buttons.length; i++) {
+    if (i === 0) {
+      buttons[i].classList.add("disabled");
+    } else if (i === buttons.length - 2) {
+      buttons[i].classList.add("disabled");
+    } else {
+      buttons[i].classList.remove("disabled");
+    }
   }
-});
-listDiv.addEventListener("mouseout", (event) => {
-  if (event.target.tagName == "LI") {
-    event.target.textContent = event.target.textContent.toLowerCase();
+}
+
+function attachListItemButtons(li) {
+  let up = document.createElement("button");
+  up.className = "up";
+  up.textContent = "up";
+  li.appendChild(up);
+
+  let down = document.createElement("button");
+  down.className = "down";
+  down.textContent = "down";
+  li.appendChild(down);
+
+  let remove = document.createElement("button");
+  remove.className = "remove";
+  remove.textContent = "remove";
+  li.appendChild(remove);
+}
+
+for (let i = 0; i < lis.length; i++) {
+  attachListItemButtons(lis[i]);
+}
+
+updateButtons();
+
+firstListItem.style.backgroundColor = "grey";
+lastListItem.style.backgroundColor = "darkGrey";
+
+listUl.addEventListener("click", (event) => {
+  if (event.target.tagName == "BUTTON") {
+    if (event.target.className == "remove") {
+      let li = event.target.parentNode;
+      let ul = li.parentNode;
+      ul.removeChild(li);
+    }
+    if (event.target.className == "up") {
+      let li = event.target.parentNode;
+      let prevLi = li.previousElementSibling;
+      let ul = li.parentNode;
+      if (prevLi) {
+        ul.insertBefore(li, prevLi);
+      }
+    }
+    if (event.target.className == "down") {
+      let li = event.target.parentNode;
+      let nextLi = li.nextElementSibling;
+      let ul = li.parentNode;
+      if (nextLi) {
+        ul.insertBefore(nextLi, li);
+      }
+    }
+    updateButtons();
   }
 });
 
@@ -37,12 +96,8 @@ addItemButton.addEventListener("click", () => {
   let ul = document.getElementsByTagName("ul")[0];
   let li = document.createElement("li");
   li.textContent = addItemInput.value;
+  attachListItemButtons(li);
   ul.appendChild(li);
   addItemInput.value = "";
-});
-
-removeItemButton.addEventListener("click", () => {
-  let ul = document.getElementsByTagName("ul")[0];
-  let li = document.querySelector("li:last-child");
-  ul.removeChild(li);
+  updateButtons();
 });

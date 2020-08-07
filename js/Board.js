@@ -10,34 +10,24 @@ class Board {
      * @return  {Array}     An array of space objects
      */
     createSpaces() {
-        let spaces = [];
+        const spaces = [];
+        for (let y = 0; y < this.rows; y++) {
+            const cols = [];
 
-        for (let i = 0; i < this.rows; i++) {
-            for (let j = 0; j < this.columns; j++) {
-                let space = new Space(i, j);
-                spaces.push(space);
+            for (let x = 0; x < this.columns; x++) {
+                const space = new Space(x, y);
+                cols.push(space);
             }
+            spaces.push(cols);
         }
-
         return spaces;
-
-        // const spaces = [];
-        //
-        // for (let y = 0; y < this.columns) {
-        //     const column = [];
-        //     for (let x = 0; x < this.rows; x++) {
-        //         const space = new Space(x, y);
-        //         column.push(space);
-        //     }
-        //     spaces.push(column);
-        // }
-        //
-        // return spaces;
     }
 
     drawHTMLBoard() {
-        for (let i = 0; i < this.spaces; i++) {
-            this.spaces[i].drawSVGSpace();
+        for (let column of this.spaces) {
+            for (let space of column) {
+                space.drawSVGSpace();
+            }
         }
     }
 }

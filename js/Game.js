@@ -32,4 +32,22 @@ class Game {
         this.ready = true;
     }
 
+    /**
+     * Branches code, depending on what key player presses
+     * @param   {Object}    e - Keydown event object
+     */
+
+    handleKeyDown(e) {
+        if (this.ready) {
+            if (e.key === "ArrowLeft") {
+                this.activePlayer.activeToken.moveLeft();
+            } else if (e.key === "ArrowRight") {
+                this.activePlayer.activeToken.moveRight(this.board.columns);
+            } else if (e.key === "ArrowDown") {
+                //move down
+            }
+        }
+    }
+
+
 }

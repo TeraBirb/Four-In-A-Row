@@ -32,6 +32,7 @@ class Game {
         this.ready = true;
     }
 
+
     /**
      * Branches code, depending on what key player presses
      * @param   {Object}    e - Keydown event object
@@ -44,10 +45,36 @@ class Game {
             } else if (e.key === "ArrowRight") {
                 this.activePlayer.activeToken.moveRight(this.board.columns);
             } else if (e.key === "ArrowDown") {
-                //move down
+                this.playToken();
             }
         }
     }
+
+    /*
+     * Callback function for event listener to play token
+     */
+
+    playToken() {
+        let spaces = this.board.spaces;
+        let activeToken = this.activePlayer.activeToken;
+        let targetColumn = spaces[activeToken.columnLocation];
+        let targetSpace = null;
+
+
+        for (let space of targetColumn) {
+            if (space.token === null) {
+                targetSpace = space;
+            }
+        }
+
+        if (targetSpace !== null) {
+            this.ready = false;
+            activeToken.drop(targetSpace)
+        }
+        console.log(spaces);
+    }
+
+
 
 
 }

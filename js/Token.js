@@ -19,11 +19,11 @@ class Token {
     }
 
     drawHTMLToken() {
-        const div = document.createElement('DIV');
-        document.getElementById('game-board-underlay').appendChild(div);
-        div.setAttribute('id', this.id);
-        div.setAttribute('class', 'token');
-        div.style.backgroundColor = this.owner.color;
+        const token = document.createElement('DIV');
+        document.getElementById('game-board-underlay').appendChild(token);
+        token.setAttribute('id', this.id);
+        token.setAttribute('class', 'token');
+        token.style.backgroundColor = this.owner.color;
     }
 
     /** 
